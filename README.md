@@ -13,3 +13,8 @@ Components: Get Metadata, ForEach, Copy data <br />
 Description: Load data from ADLS Gen2 for Game project<br />
 Components: Stored Procedure & Copy data <br />
 Note: For more info about Game project, please see https://github.com/Afsarsoft/SQL-Game <br /> 
+
+## Pipeline: 04_plGameExportData
+Description: Export data from Azure SQL DB to ADLS Gen2<br />
+Components: Copy data <br />
+Note: For more info about Game project, please see https://github.com/Afsarsoft/SQL-Game <br /> 
