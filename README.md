@@ -51,3 +51,8 @@ WHERE  TABLE_TYPE = 'BASE TABLE'
 @greater(activity('LookupTable').output.firstRow.count,0) <br />
 - Copy data to ADLS Gen2 using Copy data <br /> <br />
 Note: For more info about Game project, please see https://github.com/Afsarsoft/SQL-Game <br /> 
+
+## Pipeline: 07_plGameDeleteFiles
+Description: Delete all files from ADLS Gen2 folder.<br />
+Components: Get Metadata, ForEach, Delete<br />
+
