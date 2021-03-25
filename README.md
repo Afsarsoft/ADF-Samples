@@ -23,6 +23,31 @@ Note: For more info about Game project, please see https://github.com/Afsarsoft/
 ## Pipeline: 05_plGameExportDataDynamic
 Description: Dynamically Export data from Azure SQL DB to ADLS Gen2<br />
 Components: Lookup, ForEach, Copy data <br />
+Process flow: <br />
+- Get few tables, using Lookup   <br />
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE  TABLE_TYPE = 'BASE TABLE'
+    AND TABLE_SCHEMA = 'game'
+    AND TABLE_NAME IN ('Discount', 'Game', 'GameTeam', 'Order', 'Partner', 'PartnerInfo', 'Retailer', 'Team', 'Type'); <br />
+- For each table, bring tables <br />
+- Copy data to ADLS Gen2 using Copy data <br />
 Note: For more info about Game project, please see https://github.com/Afsarsoft/SQL-Game <br /> 
 Background: https://www.youtube.com/watch?v=KsO2FHQdILs
-It is documented in https://microsoft-bitools.blogspot.com/2019/06/staging-with-azure-data-factory-foreach.html <br /> 
+It is documented in https://microsoft-bitools.blogspot.com/2019/06/staging-with-azure-data-factory-foreach.html <br />
+
+## Pipeline: 06_plGameLookupCondition
+Description: Dynamically Export data from Azure SQL DB to ADLS Gen2<br />
+Components: Stored procedure, Lookup, ForEach, if Condition, Copy data <br />
+Process flow: <br />
+- Truncate Table History, using Stored procedure <br />  
+- Get few tables, using Lookup   <br />
+SELECT TABLE_SCHEMA, TABLE_NAME
+FROM INFORMATION_SCHEMA.TABLES
+WHERE  TABLE_TYPE = 'BASE TABLE'
+    AND TABLE_SCHEMA = 'game'
+    AND TABLE_NAME IN ('Discount', 'Game', 'GameTeam', '[Order]', 'Partner', 'PartnerInfo', 'Retailer', 'Team', 'Type', 'History');   <br />
+- For each table, bring tables which are not empty by using Lookup and If Condition <br />
+@greater(activity('LookupTable').output.firstRow.count,0) <br />
+- Copy data to ADLS Gen2 using Copy data <br />
+Note: For more info about Game project, please see https://github.com/Afsarsoft/SQL-Game <br /> 
